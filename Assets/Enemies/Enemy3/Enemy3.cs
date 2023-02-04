@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy3 : MonoBehaviour
 {
     // Public relations
-    [SerializeField] GameObject player;
+    GameObject player;
     [SerializeField] GameObject bulletPrefab;
 
     // Variables
@@ -21,6 +21,7 @@ public class Enemy3 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         animator = GetComponent<Animator>();
     }
 

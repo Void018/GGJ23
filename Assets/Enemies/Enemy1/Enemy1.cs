@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy1 : MonoBehaviour
 {
     // Public relations
-    [SerializeField] GameObject player;
+    GameObject player;
 
     // Variables
     [SerializeField] float speed;
@@ -23,6 +23,7 @@ public class Enemy1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
     }
 
