@@ -45,19 +45,35 @@ public class Boss1 : MonoBehaviour
     {
         if (currentState == State.Shower)
         {
-            if (!isShooting) StartCoroutine(Shoot());
+            if (!isShooting)
+            {
+                StartCoroutine(Shoot());
+                animator.Play("Shower");
+            }
         }
         else if (currentState == State.Spawning)
         {
-            if (!inState) StartCoroutine(Spawn());
+            if (!inState)
+            {
+                StartCoroutine(Spawn());
+                animator.Play("Default");
+            }
         }
         else if (currentState == State.Arrows)
         {
-            if (!inState) StartCoroutine(Arrows());
+            if (!inState)
+            {
+                StartCoroutine(Arrows());
+                animator.Play("Shower");
+            }
         }
         else if (currentState == State.Default)
         {
-            if (!inState) StartCoroutine(StartState());
+            if (!inState)
+            {
+                StartCoroutine(StartState());
+                animator.Play("Default");
+            }
         }
     }
     IEnumerator Arrows()

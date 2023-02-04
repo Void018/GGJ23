@@ -11,6 +11,10 @@ public class Arrow : MonoBehaviour
     {
         player = PlayerController.instance.GetComponent<PlayerCombat>();
     }
+    private void Update()
+    {
+        GetComponent<SpriteRenderer>().flipX = GetComponent<Rigidbody2D>().velocity.x < 0;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
