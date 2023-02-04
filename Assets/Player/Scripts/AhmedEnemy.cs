@@ -25,7 +25,8 @@ public class AhmedEnemy : MonoBehaviour {
         health -= damage;
         if (health <= 0) {
             Destroy(gameObject);
-            SceneManager.LoadScene("WinGameUI");
+            if (isBoss)
+                SceneManager.LoadScene("WinGameUI");
         }
 
     }

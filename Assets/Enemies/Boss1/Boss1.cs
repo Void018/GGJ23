@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss1 : MonoBehaviour
-{
+public class Boss1 : MonoBehaviour {
     // Public relations
     GameObject player;
     [SerializeField] GameObject bulletPrefab;
@@ -26,8 +25,7 @@ public class Boss1 : MonoBehaviour
     // Local Components
     Animator animator;
 
-    public enum State
-    {
+    public enum State {
         Default,
         Shower,
         Spawning,
@@ -36,54 +34,39 @@ public class Boss1 : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
         animator = GetComponent<Animator>();
     }
-    private void Update()
-    {
-        if (currentState == State.Shower)
-        {
-            if (!isShooting)
-            {
+    private void Update() {
+        if (currentState == State.Shower) {
+            if (!isShooting) {
                 StartCoroutine(Shoot());
                 animator.Play("Shower");
             }
-        }
-        else if (currentState == State.Spawning)
-        {
-            if (!inState)
-            {
+        } else if (currentState == State.Spawning) {
+            if (!inState) {
                 StartCoroutine(Spawn());
                 animator.Play("Default");
             }
-        }
-        else if (currentState == State.Arrows)
-        {
-            if (!inState)
-            {
+        } else if (currentState == State.Arrows) {
+            if (!inState) {
                 StartCoroutine(Arrows());
                 animator.Play("Shower");
             }
-        }
-        else if (currentState == State.Default)
-        {
-            if (!inState)
-            {
+        } else if (currentState == State.Default) {
+            if (!inState) {
                 StartCoroutine(StartState());
                 animator.Play("Default");
             }
         }
     }
-    IEnumerator Arrows()
-    {
+    IEnumerator Arrows() {
         inState = true;
         isShooting = true;
         animator.Play("Arrows");
         float showerEnd = Time.time + showerDuration;
-        while (Time.time < showerEnd)
-        {
+        while (Time.time < showerEnd) {
             ArrowShoot();
 
             yield return new WaitForSeconds(timeBetweenBullets / 2);
@@ -92,8 +75,7 @@ public class Boss1 : MonoBehaviour
         currentState = default;
         inState = false;
     }
-    void ArrowShoot()
-    {
+    void ArrowShoot() {
         GameObject arrow = Instantiate(arrowPrefab, transform);
         arrow.GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle.normalized * 10;
         // yield return new WaitForSeconds(shootCooldown);
@@ -101,8 +83,7 @@ public class Boss1 : MonoBehaviour
         isShooting = false;
 
     }
-    IEnumerator StartState()
-    {
+    IEnumerator StartState() {
         inState = true;
         yield return new WaitForSeconds(timeBetweenStates);
         List<State> states = new List<State>();
@@ -112,14 +93,12 @@ public class Boss1 : MonoBehaviour
         inState = false;
         currentState = states[Random.Range(0, 3)];
     }
-    IEnumerator Shoot()
-    {
+    IEnumerator Shoot() {
 
         isShooting = true;
         animator.Play("Shower");
         float showerEnd = Time.time + showerDuration;
-        while (Time.time < showerEnd)
-        {
+        while (Time.time < showerEnd) {
             Crash();
 
             yield return new WaitForSeconds(timeBetweenBullets);
@@ -130,26 +109,22 @@ public class Boss1 : MonoBehaviour
 
     }
 
-    void Crash()
-    {
+    void Crash() {
 
-        GameObject bullet = Instantiate(bulletPrefab, Random.insideUnitCircle * showerRadius, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, (Vector2)transform.position + (Random.insideUnitCircle * showerRadius), Quaternion.identity);
         Destroy(bullet, 2);
 
     }
-    IEnumerator Spawn()
-    {
+    IEnumerator Spawn() {
         inState = true;
 
         GameObject enemy1 = Instantiate(enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length)], new Vector2(Random.Range(-showerRadius, showerRadius), 17), Quaternion.identity);
         GameObject enemy2 = Instantiate(enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length)], new Vector2(Random.Range(-showerRadius, showerRadius), 20), Quaternion.identity);
-        while (enemy1.transform.position.y > 1)
-        {
+        while (enemy1.transform.position.y > 1) {
             enemy1.transform.Translate(Vector2.down);
             yield return new WaitForEndOfFrame();
         }
-        while (enemy2.transform.position.y > 1)
-        {
+        while (enemy2.transform.position.y > 1) {
             enemy2.transform.Translate(Vector2.down);
             yield return new WaitForEndOfFrame();
         }
