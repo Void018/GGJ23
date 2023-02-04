@@ -5,11 +5,12 @@ using UnityEngine;
 public class Enemy1 : MonoBehaviour
 {
     // Public relations
-    GameObject player;
+    PlayerCombat player;
 
     // Variables
     [SerializeField] float speed;
     [SerializeField] float driftFactor;
+    [SerializeField] float damage;
 
     // Logic Variables
     [SerializeField] bool isActive;
@@ -23,15 +24,16 @@ public class Enemy1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = PlayerController.instance.GetComponent<PlayerCombat>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        distanceToPlayer = (player.transform.position - transform.position);
 
+        distanceToPlayer = (player.transform.position - transform.position);
+        GetComponent<SpriteRenderer>().flipX = !(distanceToPlayer.x > 0);
         if (isActive)
         {
             FollowPlayer();
@@ -45,6 +47,10 @@ public class Enemy1 : MonoBehaviour
         {
             Vector3 newVelocity = distanceToPlayer.normalized;
             rb.velocity = Vector3.Lerp(rb.velocity.normalized, newVelocity, driftFactor) * speed;
+        }
+        else
+        {
+            player.TakeDamage(damage);
         }
 
     }

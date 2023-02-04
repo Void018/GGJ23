@@ -13,6 +13,7 @@ public class Enemy2 : MonoBehaviour
     [SerializeField] float driftFactor;
     [SerializeField] float shootCooldown;
 
+
     // Logic Variables
     [SerializeField] bool isActive;
     [SerializeField] Vector2 attackRange;
@@ -35,7 +36,7 @@ public class Enemy2 : MonoBehaviour
     void Update()
     {
         distanceToPlayer = (player.transform.position - transform.position);
-
+        GetComponent<SpriteRenderer>().flipX = !(distanceToPlayer.x > 0);
         if (isActive)
         {
             FollowPlayer();
@@ -44,6 +45,7 @@ public class Enemy2 : MonoBehaviour
         }
         if (inRange)
         {
+            GetComponent<Animator>().Play("Shoot");
             if (!isShooting)
                 StartCoroutine(Shoot());
 
@@ -51,6 +53,8 @@ public class Enemy2 : MonoBehaviour
         }
         else
         {
+            GetComponent<Animator>().Play("Enemy2Walk");
+
             isShooting = false;
             StopCoroutine(Shoot());
         }
@@ -61,6 +65,7 @@ public class Enemy2 : MonoBehaviour
 
         GameObject arrow = Instantiate(arrowPrefab, transform);
         arrow.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * speed * 2;
+        arrow.GetComponent<SpriteRenderer>().flipX = distanceToPlayer.x < 0;
         yield return new WaitForSeconds(shootCooldown);
         Destroy(arrow, 2);
         isShooting = false;

@@ -15,6 +15,7 @@ public class Enemy3 : MonoBehaviour
     [SerializeField] bool isActive;
     [SerializeField] bool isShooting;
     bool inRange;
+    
     // Local Components
     Animator animator;
 
