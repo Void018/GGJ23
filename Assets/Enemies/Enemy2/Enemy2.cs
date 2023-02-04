@@ -65,7 +65,7 @@ public class Enemy2 : MonoBehaviour
 
         GameObject arrow = Instantiate(arrowPrefab, transform);
         arrow.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * speed * 2;
-        arrow.GetComponent<SpriteRenderer>().flipX = distanceToPlayer.x < 0;
+        // arrow.GetComponent<SpriteRenderer>().flipX = distanceToPlayer.x < 0;
         yield return new WaitForSeconds(shootCooldown);
         Destroy(arrow, 2);
         isShooting = false;
