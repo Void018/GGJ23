@@ -87,7 +87,6 @@ public class PlayerAnimation : MonoBehaviour {
 
     public void SwingSword() {
         if (tween != null) {
-            print($"this tween is {tween.id}");
             tween.callOnCompletes();
             LeanTween.cancel(tween.id);
         }

@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class PlayerCombat : MonoBehaviour
-{
+public class PlayerCombat : MonoBehaviour {
 
     [Header("Setup")]
     public Collider2D attackSensor;
+    public Slider slider;
+
     private ContactFilter2D filter = new ContactFilter2D().NoFilter();
     private PlayerAnimation playerAnimation;
 
@@ -21,22 +24,18 @@ public class PlayerCombat : MonoBehaviour
     bool isDamaged;
     [SerializeField] float damageCooldown;
 
-    void Start()
-    {
+    void Start() {
         playerAnimation = GetComponent<PlayerAnimation>();
     }
 
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
             Attack();
         }
     }
 
-    void Attack()
-    {
+    void Attack() {
         playerAnimation.SwingSword();
 
         var colliders = new List<Collider2D>();
@@ -48,32 +47,28 @@ public class PlayerCombat : MonoBehaviour
             .ForEach(e => e.GetComponent<AhmedEnemy>().Hit(attackDamage));
 
     }
-    public void TakeDamage(float damage)
-    {
+    public void TakeDamage(float damage) {
         if (isDamaged) return;
 
         HP -= damage;
 
-        if (HP <= 0)
-        {
+        slider.value = (float)HP / maxHP;
+
+        if (HP <= 0) {
             Lose();
-        }
-        else
-        {
+        } else {
             StartCoroutine(DamageCooldown());
         }
 
     }
 
-    IEnumerator DamageCooldown()
-    {
+    IEnumerator DamageCooldown() {
         isDamaged = true;
         yield return new WaitForSeconds(damageCooldown);
         isDamaged = false;
     }
 
-    void Lose()
-    {
-
+    void Lose() {
+        SceneManager.LoadScene("LoseGameUI");
     }
 }

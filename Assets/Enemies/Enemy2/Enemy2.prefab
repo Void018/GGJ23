@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 513672012948170788}
   - component: {fileID: 513672012948170791}
   - component: {fileID: 1626883047}
+  - component: {fileID: 291130582}
   m_Layer: 20
   m_Name: Enemy2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +103,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.43769932, y: -0.030247748}
+  m_Offset: {x: 0.02, y: -0.030247748}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.7099483, y: 0.49999994}
@@ -151,7 +152,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 1241205470340056511, guid: 9514874f8e8cf5611b31ea4746a4a8c0, type: 3}
   speed: 3
   driftFactor: 0.2
-  shootCooldown: 1
+  shootCooldown: 2
   isActive: 1
   attackRange: {x: 7, y: 10}
   inRange: 0
@@ -175,6 +176,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &291130582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513672012948170790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd4dc141ae5d29588739fc1d80474e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  health: 0
 --- !u!1 &513672013092920797
 GameObject:
   m_ObjectHideFlags: 0

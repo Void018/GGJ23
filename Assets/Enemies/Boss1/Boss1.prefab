@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3992067266063024378}
   m_Layer: 20
   m_Name: Boss1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1281974631444070632, guid: 09e26e7f434bf9bd285ef766d9b01798, type: 3}
+  arrowPrefab: {fileID: 1241205470340056511, guid: 9514874f8e8cf5611b31ea4746a4a8c0, type: 3}
   enemiesPrefabs:
   - {fileID: 8051294042778458873, guid: 9a3df143fb24443b386179731a94e4c0, type: 3}
   - {fileID: 513672012948170790, guid: 474653300ec113e28b3328ede5dbef7c, type: 3}
@@ -142,10 +143,11 @@ MonoBehaviour:
   showerDuration: 10
   showerRadius: 10
   timeBetweenBullets: 0.5
-  currentState: 1
+  currentState: 3
   timeBetweenStates: 3
   isActive: 1
   isShooting: 0
+  inState: 0
 --- !u!95 &3992067266063024378
 Animator:
   serializedVersion: 4
