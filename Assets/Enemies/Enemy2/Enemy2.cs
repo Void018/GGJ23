@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy2 : MonoBehaviour
-{
+public class Enemy2 : MonoBehaviour {
     // Public relations
     GameObject player;
     [SerializeField] GameObject arrowPrefab;
@@ -26,33 +25,28 @@ public class Enemy2 : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         distanceToPlayer = (player.transform.position - transform.position);
         GetComponent<SpriteRenderer>().flipX = !(distanceToPlayer.x > 0);
-        if (isActive)
-        {
+        // if (isActive)
+        if (distanceToPlayer.magnitude <= 15) {
             FollowPlayer();
 
 
         }
-        if (inRange)
-        {
+        if (inRange) {
             GetComponent<Animator>().Play("Shoot");
             if (!isShooting)
                 StartCoroutine(Shoot());
 
             isShooting = true;
-        }
-        else
-        {
+        } else {
             GetComponent<Animator>().Play("Enemy2Walk");
 
             isShooting = false;
@@ -60,8 +54,7 @@ public class Enemy2 : MonoBehaviour
         }
     }
 
-    IEnumerator Shoot()
-    {
+    IEnumerator Shoot() {
 
         GameObject arrow = Instantiate(arrowPrefab, transform);
         arrow.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * speed * 2;
@@ -71,16 +64,12 @@ public class Enemy2 : MonoBehaviour
         isShooting = false;
     }
 
-    void FollowPlayer()
-    {
-        if (distanceToPlayer.magnitude > attackRange.x && !inRange)
-        {
+    void FollowPlayer() {
+        if (distanceToPlayer.magnitude > attackRange.x && !inRange) {
 
             Vector3 newVelocity = distanceToPlayer.normalized;
             rb.velocity = Vector3.Lerp(rb.velocity.normalized, newVelocity, driftFactor) * speed;
-        }
-        else
-        {
+        } else {
             inRange = true;
         }
         if (distanceToPlayer.magnitude > attackRange.y) inRange = false;

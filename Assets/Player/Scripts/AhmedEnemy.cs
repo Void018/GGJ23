@@ -23,6 +23,13 @@ public class AhmedEnemy : MonoBehaviour {
 
     public void Hit(int damage) {
         health -= damage;
+        print((float)health / maxHealth);
+        var newColor = new Color(
+                1,
+            (float)health / maxHealth,
+            (float)health / maxHealth
+        );
+        sr.color = newColor;
         if (health <= 0) {
             Destroy(gameObject);
             if (isBoss)
